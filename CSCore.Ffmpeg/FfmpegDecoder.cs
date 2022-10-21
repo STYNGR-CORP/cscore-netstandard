@@ -46,6 +46,13 @@ namespace CSCore.Ffmpeg
             Initialize();
         }
 
+        public FfmpegDecoder(string url, string pathToFfmpegBins)
+        {
+            _uri = new Uri(url);
+            _formatContext = new AvFormatContext(url, pathToFfmpegBins);
+            Initialize();
+        }
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="FfmpegDecoder" /> class based on a <see cref="Stream" />.
         /// </summary>

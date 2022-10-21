@@ -42,18 +42,32 @@ namespace CSCore.Ffmpeg
                 default:
                     throw new PlatformNotSupportedException();
             }
-
-            var assemblyDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            if (assemblyDirectory != null)
+            var assembly = Assembly.GetEntryAssembly();
+            if (assembly != null)
             {
-                string path = Path.Combine(
-                    assemblyDirectory,
-                    Path.Combine("FFmpeg", Path.Combine("bin", 
-                        Path.Combine(platform, IntPtr.Size == 8 ? "x64" : "x86"))));
+                var assemblyDirectory = Path.GetDirectoryName(assembly.Location);
+                if (assemblyDirectory != null)
+                {
+                    string path = Path.Combine(
+                        assemblyDirectory,
+                        Path.Combine("FFmpeg", Path.Combine("bin",
+                            Path.Combine(platform, IntPtr.Size == 8 ? "x64" : "x86"))));
 
-                InteropHelper.RegisterLibrariesSearchPath(path);
+                    InteropHelper.RegisterLibrariesSearchPath(path);
+                }
+
+                ffmpeg.av_register_all();
+                ffmpeg.avcodec_register_all();
             }
+            else
+            {
+                Debug.WriteLine($"Failed to load or initialize ffmpeg libraries.");
+            }
+        }
 
+        internal static void RegisterFFmpegWithNewPath(string pathToFfmpegBins)
+        {
+            InteropHelper.RegisterLibrariesSearchPath(pathToFfmpegBins);
             ffmpeg.av_register_all();
             ffmpeg.avcodec_register_all();
         }
@@ -66,7 +80,6 @@ namespace CSCore.Ffmpeg
                 throw new OutOfMemoryException("Could not allocate memory.");
             return ptr;
         }
-
 
         internal static unsafe void AvFree(IntPtr buffer)
         {

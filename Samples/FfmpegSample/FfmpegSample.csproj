@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CSCore.Ffmpeg\CSCore.Ffmpeg.csproj">
-      <Project>{f4e6168a-b2cb-413c-ae0e-0d8b856b425e}</Project>
+      <Project>{F4E6168A-B2CB-413C-AE0E-0D8B856B425E}</Project>
       <Name>CSCore.Ffmpeg</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\CSCore\CSCore.csproj">

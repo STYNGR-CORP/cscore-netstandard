@@ -61,8 +61,12 @@ namespace CSCore.Ffmpeg
             Initialize();
         }
 
-        public unsafe AvFormatContext(string url)
+        public unsafe AvFormatContext(string url, string pathToFfmpegBins = null)
         {
+            if (!string.IsNullOrEmpty(pathToFfmpegBins))
+            {
+                FfmpegCalls.RegisterFFmpegWithNewPath(pathToFfmpegBins);
+            }
             _formatContext = FfmpegCalls.AvformatAllocContext();
             fixed (AVFormatContext** pformatContext = &_formatContext)
             {
