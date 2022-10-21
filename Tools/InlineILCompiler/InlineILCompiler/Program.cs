@@ -319,6 +319,7 @@ namespace InlineILCompiler
                     string disasmFile = Path.Combine(working, "disasm.il");
                     string ildasmArguments = string.Format("\"{0}\" /linenum /out=\"{1}\"", Target, disasmFile);
                     Console.WriteLine("ildasm " + ildasmArguments);
+                    Console.WriteLine($"Path to ildasm.exe: {Path.Combine(SDKDirectory, "", "ildasm.exe")}");
                     if (!Run(Path.Combine(SDKDirectory, "", "ildasm.exe"), ildasmArguments))
                         return 4;
                     Console.WriteLine("... Done disassembling.");

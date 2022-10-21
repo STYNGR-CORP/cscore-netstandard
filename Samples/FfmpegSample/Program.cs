@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
-using CSCore;
 using CSCore.Ffmpeg;
 using CSCore.SoundOut;
 
@@ -27,7 +26,7 @@ namespace FfmpegSample
 
             Stream stream = null;
             string url = null;
-
+                
             if (choice == 1)
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -58,7 +57,6 @@ namespace FfmpegSample
             {
                 wasapiOut.Initialize(ffmpegDecoder);
                 wasapiOut.Play();
-
                 Console.ReadKey();
             }
         }

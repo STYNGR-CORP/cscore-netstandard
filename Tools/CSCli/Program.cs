@@ -58,7 +58,7 @@ namespace CSCli
                 MessageIntegration.WriteError(String.Format("Could not find file \"{0}\".", filename));
                 Environment.Exit(-1);
             }
-
+            string origfilename = filename + "_orig"; File.Delete(origfilename); File.Move(filename, origfilename);
             WriterParameters wp = new WriterParameters();
             ReaderParameters rp = new ReaderParameters();
 
@@ -91,7 +91,7 @@ namespace CSCli
             MessageIntegration.Info("Generating pdb: " + generatePdb.ToString());
 
             //open assembly
-            var assembly = AssemblyDefinition.ReadAssembly(filename, rp);
+            var assembly = AssemblyDefinition.ReadAssembly(origfilename, rp);
             //add the directory assembly directory as search directory to resolve referenced assemblies
             ((BaseAssemblyResolver)assembly.MainModule.AssemblyResolver).AddSearchDirectory(Path.GetDirectoryName(filename));
 
@@ -103,7 +103,6 @@ namespace CSCli
                 {
                     //if the assembly was patched successfully -> replace the old assembly file with the new, patched assembly file
                     //the symbols file will be created automatically
-                    File.Delete(filename);
                     assembly.Write(filename, wp);
                 }
                 catch (Exception ex)
